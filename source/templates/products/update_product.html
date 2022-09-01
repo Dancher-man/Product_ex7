@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Редактирование продукта{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <form action="" method="post">
+            {% include 'partial/form.html' with button_text='Редактировать' %}
+        </form>
+        <a href="{% url 'source:index' %}">На главную</a>
+    </div>
+{% endblock %}
