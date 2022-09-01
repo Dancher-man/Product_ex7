@@ -3,9 +3,9 @@
 
 {% block content %}
     <div class="text-center">
-        <form action="" method="post">
-            {% include 'partial/form.html' with button_text='Редактировать' %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% include 'partial/form.html' with button_text='Создать' button_class='btn btn-primary mb-3' %}
         </form>
-        <a href="{% url 'source:index' %}">На главную</a>
+        <a href="{% url 'source:index' %}" class="btn btn-primary">На главную</a>
     </div>
 {% endblock %}

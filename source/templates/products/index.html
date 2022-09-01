@@ -3,7 +3,7 @@
 {% block nav %}
     {% if perms.source.add_product %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'source:create_product' %}">Создание товара</a>
+            <a class="nav-link text-light" href="{% url 'source:create_product' %}">Создание товара</a>
         </li>
     {% endif %}
 {% endblock %}
@@ -14,12 +14,14 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><a
-                                href="{% url "webapp:product_view" product.pk %}">{{ product.name }}</a></h5>
+                                href="{% url "source:product_view" product.pk %}">{{ product.name }}</a></h5>
                         <p class="card-text">Категория: {{ product.get_category_display }}</p>
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'webapp:product_update' product.pk %}">Изменить</a>
-                            <a class="btn btn-danger" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
-                        </div>
+                        {% if request.user.is_authenticated and perms.webapp.change_product and perms.webapp.delete_product %}
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'source:update_product' product.pk %}">Изменить</a>
+                                <a class="btn btn-danger" href="{% url 'source:delete_product' product.pk %}">Удалить</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

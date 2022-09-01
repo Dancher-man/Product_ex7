@@ -25,6 +25,8 @@ class MyUserCreationForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(label='email', required=True, widget=widgets.EmailInput(attrs={'class': 'form-control mb-3'}))
+
     class Meta:
         model = get_user_model()
         fields = ['first_name', 'last_name', 'email']
@@ -32,7 +34,6 @@ class UserUpdateForm(forms.ModelForm):
         widgets = {
             'first_name': widgets.TextInput(attrs={'class': 'form-control mb-3'}),
             'last_name': widgets.TextInput(attrs={'class': 'form-control mb-3'}),
-            'email': widgets.EmailInput(attrs={'class': 'form-control mb-3'})
         }
 
 
@@ -48,9 +49,12 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 class PasswordChangeForm(forms.ModelForm):
-    password = forms.CharField(label="Новый пароль", strip=False, widget=forms.PasswordInput(attrs={'class': 'form-control mb-3'}))
-    password_confirm = forms.CharField(label="Подтвердите пароль", widget=forms.PasswordInput(attrs={'class': 'form-control mb-3'}), strip=False)
-    old_password = forms.CharField(label="Старый пароль", strip=False, widget=forms.PasswordInput(attrs={'class': 'form-control mb-3'}))
+    password = forms.CharField(label="Новый пароль", strip=False,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control mb-3'}))
+    password_confirm = forms.CharField(label="Подтвердите пароль",
+                                       widget=forms.PasswordInput(attrs={'class': 'form-control mb-3'}), strip=False)
+    old_password = forms.CharField(label="Старый пароль", strip=False,
+                                   widget=forms.PasswordInput(attrs={'class': 'form-control mb-3'}))
 
     def clean_password_confirm(self):
         password = self.cleaned_data.get("password")

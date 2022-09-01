@@ -7,4 +7,10 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'category', 'description', 'picture']
-        widgets = {'description': widgets.Textarea, 'category': widgets.CheckboxInput}
+        widgets = {
+            'name': widgets.TextInput(attrs={'class': 'form-control mb-3',
+                                              'placeholder': 'Название'}),
+            'category': widgets.Select(attrs={'class': 'form-control mb-3'}),
+            'description': widgets.Textarea(attrs={'class': 'form-control mb-3'}),
+            'picture': widgets.ClearableFileInput(attrs={'class': 'form-control mb-3'})
+        }
