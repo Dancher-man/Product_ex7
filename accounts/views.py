@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from accounts.forms import MyUserCreationForm, UserUpdateForm, ProfileUpdateForm, PasswordChangeForm
 from accounts.models import Profile
-from webapp.models import Review
+# from source.models import Review
 
 
 class RegisterView(CreateView):
@@ -38,9 +38,9 @@ class ProfileView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print(self.request.user)
-        reviews = Review.objects.filter(author=self.request.user)
-        print(reviews)
-        context['reviews'] = reviews
+        # reviews = Review.objects.filter(author=self.request.user)
+        # print(reviews)
+        # context['reviews'] = reviews
         return context
 
 

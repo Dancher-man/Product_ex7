@@ -121,8 +121,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 LOGIN_URL = 'accounts:login'
-LOGOUT_REDIRECT_URL = 'webapp:index'
-LOGIN_REDIRECT_URL = 'webapp:index'
+LOGOUT_REDIRECT_URL = 'source:index'
+LOGIN_REDIRECT_URL = 'source:index'
 
 
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'uploads')

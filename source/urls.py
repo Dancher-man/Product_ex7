@@ -1,9 +1,13 @@
-from django.contrib.auth.views import LoginView
 from django.urls import path
+
+from source.views.pruducts import ProductsListView, DetailProductView, CreateProductView, UpdateProductView, DeleteProductView
 
 app_name = 'source'
 
 urlpatterns = [
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
-
+    path('', ProductsListView.as_view(), name='index'),
+    path('product/<int:pk>/', DetailProductView.as_view(), name='product_view'),
+    path('product/create/', CreateProductView.as_view(), name='create_product'),
+    path('product/update/<int:pk>/', UpdateProductView.as_view(), name='update_product'),
+    path('product/delete/<int:pk>/', DeleteProductView.as_view(), name='delete_product'),
 ]
