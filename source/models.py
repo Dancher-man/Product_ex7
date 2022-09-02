@@ -21,7 +21,7 @@ class Product(models.Model):
 
 
 class Review(models.Model):
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='users', verbose_name='Автор')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='reviews', verbose_name='Автор')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews', verbose_name='Товар')
     text = models.TextField(max_length=2000, verbose_name='Текст отзыва')
     mark = models.IntegerField(verbose_name='Оценка', validators=[MaxValueValidator(5), MinValueValidator(1)])
