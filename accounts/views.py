@@ -7,6 +7,9 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from accounts.forms import MyUserCreationForm, UserUpdateForm, ProfileUpdateForm, PasswordChangeForm
 from accounts.models import Profile
+from source.models import Review
+
+
 # from source.models import Review
 
 
@@ -30,17 +33,17 @@ class RegisterView(CreateView):
         return next_url
 
 
-class ProfileView(LoginRequiredMixin, DetailView):
+class ProfileView(DetailView):
     model = get_user_model()
     template_name = 'user_profile.html'
     context_object_name = 'user_object'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.request.user)
-        # reviews = Review.objects.filter(author=self.request.user)
-        # print(reviews)
-        # context['reviews'] = reviews
+        reviews = self.object.reviews.all()
+        if not self.request.user.has_perm('source.view_not_moderated_review') and self.object != self.request.user:
+            reviews = reviews.filter(is_moderated=True)
+        context['reviews'] = reviews.order_by('-created_at')
         return context
 
 

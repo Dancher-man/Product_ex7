@@ -33,6 +33,7 @@ class Review(models.Model):
         db_table = 'reviews'
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
+        permissions = [('view_not_moderated_review', 'Видеть не модерированные отзывы', )]
 
     def __str__(self):
         return f"{self.author.username} - {self.product.name}"

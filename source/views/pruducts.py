@@ -10,13 +10,20 @@ class ProductsListView(ListView):
     model = Product
     template_name = 'products/index.html'
     context_object_name = 'products'
-    # ordering = '-created_at'
     paginate_by = 6
 
 
 class DetailProductView(DetailView):
     model = Product
     template_name = 'products/product_view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reviews = self.object.reviews.all()
+        if not self.request.user.has_perm('source.view_not_moderated_review'):
+            reviews = reviews.filter(is_moderated=True)
+        context['reviews'] = reviews.order_by('-created_at')
+        return context
 
 
 class CreateProductView(PermissionRequiredMixin, CreateView):
