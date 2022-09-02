@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load my_tags %}
 {% block title %}Подробнее о Продукте{% endblock %}
 {% block nav %}
     {% if request.user.is_authenticated and perms.webapp.change_product and perms.webapp.delete_product %}
@@ -20,6 +21,13 @@
             <p class="card-text"><b class="fs-4">Название: </b>{{ product.name }}</p>
             <p class="card-text"><b class="fs-4">Категория: </b>{{ product.get_category_display }}</p>
             <p class="card-text"><b class="fs-4">Описание: </b>{{ product.description|linebreaksbr }}</p>
+            <p class="card-text">Средняя оценка:
+                {% if product.get_avg %}
+                    {{ product.get_avg|my_float}}
+                {% else %}
+                    {{ product.get_avg|default:'Нет оценивался' }}
+                {% endif %}
+            </p>
             {% if request.user.is_authenticated %}
                 <p class="card-text"><b class="fs-4">
                     <a href="{% url 'source:create_review' product.pk %}" class="btn btn-primary">Оставить отзыв</a></b>

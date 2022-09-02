@@ -25,3 +25,14 @@ class UserReviewForm(forms.ModelForm):
                                              'placeholder': 'Название'}),
             'text': widgets.Textarea(attrs={'class': 'form-control mb-3'})
         }
+
+
+class ModeratorReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['text', 'mark', 'is_moderated']
+        widgets = {
+            'mark': widgets.TextInput(attrs={'class': 'form-control mb-3',
+                                             'placeholder': 'Название'}),
+            'text': widgets.Textarea(attrs={'class': 'form-control mb-3'})
+        }

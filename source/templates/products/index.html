@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load my_tags %}
 {% block nav %}
     {% if perms.source.add_product %}
         <li class="nav-item">
             <a class="nav-link text-light" href="{% url 'source:create_product' %}">Создание товара</a>
+        </li>
+    {% endif %}
+    {% if perms.source.view_not_moderated_review %}
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'source:not_moderated_reviews' %}">Непромодерированные отзывы</a>
         </li>
     {% endif %}
 {% endblock %}
@@ -15,6 +21,14 @@
                     <div class="card-body">
                         <h5 class="card-title"><a
                                 href="{% url "source:product_view" product.pk %}">{{ product.name }}</a></h5>
+                        <p class="card-text">Средняя оценка:
+                            {% if product.get_avg %}
+{#                                {{ product.get_avg }}#}
+                                {{ product.get_avg|my_float}}
+                            {% else %}
+                                {{ product.get_avg|default:'Нет оценивался' }}
+                            {% endif %}
+                        </p>
                         <p class="card-text">Категория: {{ product.get_category_display }}</p>
                         {% if request.user.is_authenticated and perms.webapp.change_product and perms.webapp.delete_product %}
                             <div class="btn-group">

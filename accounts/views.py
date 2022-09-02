@@ -72,13 +72,16 @@ class UsersView(PermissionRequiredMixin, ListView):
         return context
 
 
-class UpdateProfileView(LoginRequiredMixin, UpdateView):
+class UpdateProfileView(PermissionRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = UserUpdateForm
     template_name = 'update_profile_user.html'
     profile_form_class = ProfileUpdateForm
     object = None
     context_object_name = 'user_object'
+
+    def has_permission(self):
+        return self.request.user == self.get_object()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

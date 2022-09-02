@@ -8,8 +8,12 @@
             <p class="card-text"><b>Описание: </b><br>{{ review.text }}</p>
             <p class="card-text"><b>Оценка: </b><br>{{ review.mark }}</p>
             <p class="card-text"><b>Email:</b><br>{{ review.author.email|default:'Нет' }}</p>
-{#                    <p><a href="{% url 'webapp:update_review_moderator' review.pk %}">Редактировать отзыв</a></p>#}
-{#                    <p><a href="{% url 'webapp:delete_product' review.pk %}">Удалить отзыв</a></p>#}
+            {% if review.author == request.user or perms.source.change_review %}
+                <p><a href="{% url 'source:update_review' review.pk %}">Редактировать отзыв</a></p>
+            {% endif %}
+            {% if review.author == request.user or perms.source.delete_review %}
+                <p><a href="{% url 'source:delete_review' review.pk %}">Удалить отзыв</a></p>
+            {% endif %}
         </div>
     </div>
 {% empty %}
